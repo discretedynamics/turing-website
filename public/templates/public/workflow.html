@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ADAM | Workflows</title>
+    <title>ADAM | {{ workflow.name }}</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static "public/css/bootstrap.min.css" %}" rel="stylesheet">
@@ -101,58 +101,15 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-code-fork"></i>  Browse Workflows
+                                <a class="fa fa-arrow-left" href="{% url 'public:workflows' %}"></a> Back
                             </li>
                         </ol>
                     </div>
                 </div>
                 <!-- /.row -->
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <form role="form">
-                            <div class="form-group">
-                                <div class="col-lg-10">
-                                    <input class="form-control" placeholder="Search .." style="text-align:center;">
-                                </div>
-                                <div class="col-lg-1">
-                                    <button type="submit" class="btn btn-info">Search</button>
-                                </div>
-                                <div class="col-lg-1">
-                                    <button type="reset" class="btn btn-default">Reset</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                 </div>
-                <br>
-                <!-- /.row -->
 
-                <div class="row">
-                    <div class="col-sm-12">
-                        {% if workflows_list %}
-                            {% for workflow in workflows_list %}
-                                <div class="col-sm-6" style="text-align: center">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">{{workflow.name}}</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            {{workflow.description}}
-                                            <br><br>
-                                            <a class="btn btn-default" href="{% url 'public:run_workflow' workflow.id %}">Use Now!</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            <div class="alert alert-danger" style="text-align: center">
-                                <strong>Oppss!</strong> It looks like there is no workflows out there!
-                                What about creating and publishing your workflow here?<br> <a href="{% url 'public:contribute' %}">Contribute now!</a>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
             </div>
             <!-- /.container-fluid -->
 

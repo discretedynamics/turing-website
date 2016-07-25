@@ -22,4 +22,4 @@ class Author(models.Model):
     personal_website = models.URLField('Personal Website')
     organization = models.CharField('Organization', max_length=200)
     organization_website = models.URLField('Organization Website')
-    join_date = models.DateTimeField()
+    join_date = models.DateTimeField(auto_now_add=True, blank=True)
