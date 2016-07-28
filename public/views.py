@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Algorithm, Contributor
 
 # Create your views here.
 def home(request):
@@ -10,18 +11,15 @@ def home(request):
     return render(request, 'public/index.html', context)
 
 def algorithms(request):
-    algorithms_list = [{'id': 1, 'name': 'Algorithm 1', 'description': 'desc1'}, \
-                       {'id': 2, 'name': 'Algorithm 2', 'description': 'desc2'}, \
-                       {'id': 3, 'name': 'Algorithm 3', 'description': 'desc3'}, \
-                       {'id': 4, 'name': 'Algorithm 4', 'description': 'desc4'}]
+    algorithms_list = Algorithm.objects.order_by('-pub_date')[:5]
     context = {
         'algorithms_list': algorithms_list
     }
     return render(request, 'public/algorithms.html', context)
 
 def useAlgorithm(request, algorithm_id):
-    context = { 'algorithm': {'id': algorithm_id, \
-               'name': 'ay 7aga delwa2t' + str(algorithm_id)} }
+    algorithm = get_object_or_404(Algorithm, pk=algorithm_id)
+    context = { 'algorithm': algorithm }
     return render(request, 'public/algorithm.html', context)
 
 
