@@ -13,5 +13,9 @@ urlpatterns = [
     url(r'^contribute/', views.contribute, name='contribute'),
     url(r'^about/', views.about, name='about'),
     url(r'^faq/', views.faq, name='faq'),
-    url(r'^contact/', views.contact, name='contact')
+    url(r'^contact/', views.contact, name='contact'),
+    url(r'^sign-up/', views.signup, name='sign-up'),
+    url(r'^sign-up-submit/', views.signup_submit, name='sign-up-submit'),
+    url(r'^sign-in/', views.signin, name='sign-in'),
+    url(r'^sign-in-submit/', views.signin_submit, name='sign-in-submit')
 ]
