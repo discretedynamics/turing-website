@@ -23,7 +23,7 @@ class Contributor(models.Model):
 
 class Algorithm(models.Model):
     name = models.CharField('Algorithm Name', max_length=200)
-    versions = models.CharField('Algorithm Version', max_length=10, default="['latest']")
+    versions = models.CharField('Algorithm Versions', max_length=10, default="['latest']")
     summary = models.CharField('Summary', max_length=200)
     description = models.TextField('Description')
     website = models.URLField('Website')

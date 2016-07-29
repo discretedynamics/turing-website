@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from .models import Algorithm, Contributor
+from .models import Algorithm
+import ast
 
 # Create your views here.
 def home(request):
@@ -19,16 +20,15 @@ def algorithms(request):
 
 def useAlgorithm(request, algorithm_id):
     algorithm = get_object_or_404(Algorithm, pk=algorithm_id)
-    context = { 'algorithm': algorithm }
+    versions = ast.literal_eval(algorithm.versions)
+    context = { 'algorithm': algorithm, \
+                'versions': versions}
     return render(request, 'public/algorithm.html', context)
 
 
 
 def workflows(request):
-    workflows_list = [{'id': 1, 'name': 'Workflow 1', 'description': 'desc1'}, \
-                       {'id': 2, 'name': 'Workflow 2', 'description': 'desc2'}, \
-                       {'id': 3, 'name': 'Workflow 3', 'description': 'desc3'}, \
-                       {'id': 4, 'name': 'Workflow 4', 'description': 'desc4'}]
+    workflows_list = []
     context = {
         'workflows_list': workflows_list
     }
@@ -41,13 +41,13 @@ def runWorkflow(request, workflow_id):
     return render(request, 'public/workflow.html', context)
 
 def contribute(request):
-    return HttpResponse("Hello in the contribute page")
+    return render(request, 'public/contribute.html')
 
 def about(request):
-    return HttpResponse("Hello in the about page")
+    return render(request, 'public/about.html')
 
 def faq(request):
-    return HttpResponse("Hello in the FAQ page")
+    return render(request, 'public/faq.html')
 
 def contact(request):
-    return HttpResponse("Hello in the contact page")
+    return render(request, 'public/contact.html')

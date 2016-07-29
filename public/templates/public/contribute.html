@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TURING | {{ algorithm.name }}</title>
+    <title>TURING | Contribute</title>
 
     <link rel="icon"
       type="image/png"
@@ -70,13 +70,13 @@
                     <li>
                         <a href="{% url 'public:home' %}"><i class="fa fa-fw fa-home"></i> Home</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="{% url 'public:algorithms' %}"><i class="fa fa-fw fa-sort-numeric-asc"></i> Algorithms</a>
                     </li>
                     <li>
                         <a href="{% url 'public:workflows' %}"><i class="fa fa-fw fa-code-fork"></i> Workflows</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="{% url 'public:contribute' %}"><i class="fa fa-fw fa-edit"></i> Contribute</a>
                     </li>
                     <li>
@@ -101,71 +101,44 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            {{algorithm.name}} <small>{{algorithm.summary}}</small>
+                            TURING <small>Algorithms for Computation with Finite Dynamical Systems</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <a class="fa fa-arrow-left" href="{% url 'public:algorithms' %}"></a> Back
+                                <i class="fa fa-edit"></i> Contribute
                             </li>
                         </ol>
                     </div>
                 </div>
                 <!-- /.row -->
 
-                {% if algorithm.contributor %}
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h3>Contributor</h3>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="page-header">Why Contributing to TURING?..</h2>
+                        <div class="well">
                             <p>
-                                <b>{{algorithm.contributor.name}}</b>
-                                <br>
-                                {{algorithm.contributor.organization}}
+                                <ul>
+                                    <li>Thanks to <a href="http://algorun.org">AlgoRun</a>, it requires <b>no code change</b> to package your algorithm. </li>
+                                    <li>The underlying <a>Docker</a> technology used ensures that your algorithm will always work in the future; <br><b>no broken installation links or outdated libraries.</b></li>
+                                    <li>TURING gives your algorithms <b>visibility</b> and <b>ease of use</b> for your audience.</li>
+                                    <li>All AlgoRun-based algorithms can be used to construct data analysis workflows using AlgoPiper in <b>a few clicks</b></li>
+                                    <li>Build up your <b>public profile</b> and get more citation on your research.</li>
+                                </ul>
                             </p>
                         </div>
                     </div>
-                {% endif %}
+                </div>
+                <br>
                 <!-- /.row -->
 
-                {% if algorithm.description %}
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h3>Description</h3>
-                            <p>{{algorithm.description}}</p>
-                        </div>
+                <div class="row" style="text-align: center">
+                    <div class="col-lg-12">
+                        <button type="button" class="btn btn-success">Sign Up Now</button>
                     </div>
-                {% endif %}
-                <!-- /.row -->
-
-                {% if algorithm.website %}
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h3>Read more on {{ algorithm.name }} website</h3>
-                            <p><a href="{{ algorithm.website }}" target="_blank">{{ algorithm.website }}</a></p>
-                        </div>
-                    </div>
-                {% endif %}
-                <!-- /.row -->
-
-                {% if versions %}
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h3>Use now</h3>
-                        </div>
-                        <div class="col-lg-2">
-                            <select class="form-control">
-                                {% for version in versions %}
-                                    <option>{{ version }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col-lg-2">
-                            <button type="button" class="btn btn-primary">Launch on AlgoRun</button>
-                        </div>
-                    </div>
-                {% endif %}
-                <!-- /.row -->
 
                 </div>
+                <br>
+                <!-- /.row -->
 
             </div>
             <!-- /.container-fluid -->
