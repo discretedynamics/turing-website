@@ -80,13 +80,13 @@
                         <a href="{% url 'public:contribute' %}"><i class="fa fa-fw fa-edit"></i> Contribute</a>
                     </li>
                     <li>
-                        <a href="{% url 'public:about' %}"><i class="fa fa-fw fa-info-circle"></i> About</a>
-                    </li>
-                    <li>
                         <a href="{% url 'public:faq' %}"><i class="fa fa-fw fa-question-circle"></i> FAQs</a>
                     </li>
                     <li>
-                        <a href="{% url 'public:contact' %}"><i class="fa fa-fw fa-send"></i> Contact Us</a>
+                        <a href="{% url 'public:about' %}"><i class="fa fa-fw fa-info-circle"></i> About</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'public:contact' %}"><i class="fa fa-fw fa-envelope"></i> Contact Us</a>
                     </li>
                 </ul>
             </div>
@@ -116,10 +116,10 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h3>Contributor</h3>
-                            <p>
+                            <p class="lead">
                                 <b>{{algorithm.contributor.name}}</b>
                                 <br>
-                                {{algorithm.contributor.organization}}
+                                <small>{{algorithm.contributor.organization}}</small>
                             </p>
                         </div>
                     </div>
@@ -130,7 +130,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h3>Description</h3>
-                            <p>{{algorithm.description}}</p>
+                            <p class="lead">{{algorithm.description}}</p>
                         </div>
                     </div>
                 {% endif %}
@@ -140,7 +140,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h3>Read more on {{ algorithm.name }} website</h3>
-                            <p><a href="{{ algorithm.website }}" target="_blank">{{ algorithm.website }}</a></p>
+                            <p class="lead"><a href="{{ algorithm.website }}" target="_blank">{{ algorithm.website }}</a></p>
                         </div>
                     </div>
                 {% endif %}
@@ -151,6 +151,7 @@
                         <div class="col-lg-12">
                             <h3>Use now</h3>
                         </div>
+                        <div class="col-lg-1"><p class="lead">Version:</p></div>
                         <div class="col-lg-2">
                             <select class="form-control">
                                 {% for version in versions %}

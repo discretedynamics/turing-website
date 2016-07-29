@@ -79,14 +79,14 @@
                     <li>
                         <a href="{% url 'public:contribute' %}"><i class="fa fa-fw fa-edit"></i> Contribute</a>
                     </li>
-                    <li>
-                        <a href="{% url 'public:about' %}"><i class="fa fa-fw fa-info-circle"></i> About</a>
-                    </li>
                     <li class="active">
                         <a href="{% url 'public:faq' %}"><i class="fa fa-fw fa-question-circle"></i> FAQs</a>
                     </li>
                     <li>
-                        <a href="{% url 'public:contact' %}"><i class="fa fa-fw fa-send"></i> Contact Us</a>
+                        <a href="{% url 'public:about' %}"><i class="fa fa-fw fa-info-circle"></i> About</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'public:contact' %}"><i class="fa fa-fw fa-envelope"></i> Contact Us</a>
                     </li>
                 </ul>
             </div>
@@ -108,6 +108,143 @@
                                 <i class="fa fa-question-circle"></i> Frequently Asked Questions
                             </li>
                         </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Do I need to install TURING on my computer?</h4>
+                        <div class="well">
+                            <b>No.</b><br>
+                            All algorithms published on TURING are accessible immediately from the web browser.
+                            If you want to contribute by publishing your algorithms here,
+                            you will need to use AlgoRun.
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>What is AlgoRun?</h4>
+                        <div class="well">
+                            AlgoRun is a dedicated packaging system for implemented algorithms,
+                            using Docker technology. Implemented algorithms, packaged with AlgoRun,
+                            can be executed through a user-friendly interface directly from a web browser or
+                            via a standardized RESTful web API to allow easy integration into more complex workflows.
+                            The packaged algorithm includes the entire software execution environment,
+                            thereby eliminating the common problem of software dependencies and the irreproducibility
+                            of computations over time. ( read more on AlgoRun <a href="http://algorun.org" target="_blank">website</a> )
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>What is Docker?</h4>
+                        <div class="well">
+                            Docker is the world's leading software containerization platform.
+                            Docker containers wrap a piece of software in a complete filesystem that contains everything
+                            needed to run: code, runtime, system tools, system libraries – anything that can be
+                            installed on a server. This guarantees that the software will always run the same,
+                            regardless of its environment. ( read more on Docker <a href="http://www.docker.com" target="_blank">website</a> )
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>How is Docker different from a Virtual Machine (VM)?</h4>
+                        <div class="well">
+                            The below image summarizes how Docker is different from virtual machines from
+                            a technical point of view. Docker is very lightweight compared to a virtual machine,
+                            which makes it the ideal solution for wrapping software dependencies in a standard unit
+                            that runs on any machine where Docker engine is installed.
+                            Containers running on a single machine share the same operating system kernel;
+                            they start instantly and use less RAM. Images are constructed from layered filesystems
+                            and share common files, making disk usage and image downloads much more efficient.
+                            <div style="text-align: center">
+                                <img src="{% static 'public/img/docker-vs-vm.png' %}" style="width: 70%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Why do you use Docker?</h4>
+                        <div class="well">
+                            Because Docker containers are <b>lightweight</b>, <b>open</b> and <b>secure by default</b>.
+                            These characteristics enables TURING to support a new model of crowd-sourced mathematical
+                            algorithms, that are reproducible and easy to be packaged by authors with no background on
+                            computer science.
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Do I need to learn a new programming language to contribute?</h4>
+                        <div class="well">
+                            <b>No.</b><br> To publish an algorithm/pipeline on TURING, all you need to do is to use AlgoRun
+                            to package your already-impleneted algorithm into a Docker container.
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Do I need to be a Docker expert to package my algorithm? </h4>
+                        <div class="well">
+                            <b>No.</b><br> AlgoRun makes it easy for developers with no background on Docker to quickly
+                            get the benefits of the packaging system without getting into the details of Docker.
+                            Refer to the <a href="http://algorun.org/documentation">documentation</a> on AlgoRun website to get started with examples.
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>How long does it take to package my algorithm and publish it here?</h4>
+                        <div class="well">
+                            Given that your algorithm is already implemented,
+                            it takes only <b>5 minutes</b> to package with AlgoRun once you are comfotable with the documentation.
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>What is AlgoPiper?</h4>
+                        <div class="well">
+                            AlgoPiper is a web-based drag-n-drop visual tool to create modular and
+                            reusable computational pipelines from AlgoRun algorithms.
+                            AlgoPiper makes troubleshooting complex pipelines a few clicks process.
+                            ( read more on <a href="http://algopiper.org" target="_blank">AlgoPiper</a> website )
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Is there any hidden costs for using TURING?</h4>
+                        <div class="well">
+                            <b>No.</b><br>
+                            Unless otherwise specified by an algorithm author for commercial use,
+                            TURING is FREE and will always be free to empower our community of researchers with
+                            the latest developments in finite dynamical systems algorithms within a few clicks.
+                        </div>
                     </div>
                 </div>
                 <!-- /.row -->
