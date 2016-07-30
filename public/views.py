@@ -1,7 +1,11 @@
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, Http404
+from django import forms
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
+from django.contrib import auth
 from .models import Algorithm, Contributor
 import ast
+from django.views.decorators.csrf import csrf_protect
+
 
 
 # Create your views here.
@@ -66,70 +70,73 @@ def signup(request):
 def validate_signup_form(request):
     context = {}
     form_complete = True
-    if 'name' in request.POST:
-        if request.POST['name']:
-            context['name'] = request.POST['name']
-        else:
-            context['missing_name'] = 'has-error'
-            form_complete = False
+
+    name  = request.POST.get('name', '')
+    if name is not None:
+        context['name'] = name
     else:
         context['missing_name'] = 'has-error'
         form_complete = False
 
-    if 'email' in request.POST:
-        if request.POST['email']:
-            context['email'] = request.POST['email']
-        else:
-            context['missing_email'] = 'has-error'
-            form_complete = False
+    email  = request.POST.get('email', '')
+    if email is not None:
+        context['email'] = email
     else:
         context['missing_email'] = 'has-error'
         form_complete = False
 
-    if 'organization' in request.POST:
-        if request.POST['organization']:
-            context['organization'] = request.POST['organization']
-        else:
-            context['missing_organization'] = 'has-error'
-            form_complete = False
+    organization  = request.POST.get('organization', '')
+    if organization is not None:
+        context['organization'] = organization
     else:
         context['missing_organization'] = 'has-error'
         form_complete = False
 
-    if 'password' in request.POST:
-        if request.POST['password']:
-            context['password'] = request.POST['password']
-        else:
-            context['password_error'] = 'has-error'
-            form_complete = False
+    password = request.POST.get('password', '')
+    if password is not None:
+        context['password'] = password
     else:
-        context['password_error'] = 'has-error'
+        context['missing_password'] = 'has-error'
+        form_complete = False
+    confirm_password  = request.POST.get('confirm_password', '')
+    if confirm_password is not None:
+        context['confirm_password'] = confirm_password
+    else:
+        context['missing_password'] = 'has-error'
         form_complete = False
 
-    if 'confirm_password' in request.POST:
-        if request.POST['confirm_password']:
-            context['confirm_password'] = request.POST['confirm_password']
-        else:
+    if form_complete:
+        if context['password'] != context['confirm_password']:
             context['password_error'] = 'has-error'
             form_complete = False
-    else:
-        context['password_error'] = 'has-error'
-        form_complete = False
 
     return form_complete, context
 
 
+@csrf_protect
 def signup_submit(request):
+
     form_complete, context = validate_signup_form(request)
 
     if form_complete:
-        new_contributor = Contributor(name=context['name'], \
-                                      email=context['email'], \
-                                      organization=context['organization'])
-        #new_contributor.save()
-        return HttpResponse('Sigun will be available very soon!')
-    else:
-        return render(request, 'public/signup.html', context)
+        try:
+            user = User.objects.get(username=context['email'])
+            # user exists!
+            context = {'error_message': "This email address already exists! Please, sign in instead!"}
+            return render(request, 'public/signup.html', context)
+        except User.DoesNotExist:
+            user = User.objects.create_user(username=context['email'], \
+                                            email=context['email'], \
+                                            password=context['password'])
+            user.save()
+            new_contributor = Contributor(name=context['name'], \
+                                          email=context['email'], \
+                                          organization=context['organization'])
+            new_contributor.save()
+            user = auth.authenticate(username=context['email'], password=context['password'])
+            if user is not None and user.is_active:
+                auth.login(request, user)
+                return redirect('public:contributor_profile')
 
 
 def signin(request):
@@ -137,22 +144,29 @@ def signin(request):
 
 
 def signin_submit(request):
-    return HttpResponse('Sign in will be available soon!')
+    username = request.POST['email']
+    password = request.POST['password']
+    user = auth.authenticate(username=username, password=password)
+    if user is not None:
+        auth.login(request, user)
+        return redirect('public:contributor_profile')
+    else:
+        context = {'error_message': 'Invalid credentials!', \
+                   'wrong_email': 'has-error', \
+                   'wrong_password': 'has-error'}
+        return render(request, 'public/signin.html', context)
 
-    '''if request.method != 'POST':
-        raise Http404('Only POSTs are allowed')
-    try:
-        m = Member.objects.get(username=request.POST['username'])
-        if m.password == request.POST['password']:
-            request.session['member_id'] = m.id
-            return HttpResponseRedirect('/you-are-logged-in/')
-    except Member.DoesNotExist:
-        return HttpResponse("Your username and password didn't match.")'''
+
+def sign_out(request):
+    auth.logout(request)
+    return redirect('public:home')
 
 
-def logout(request):
-    try:
-        del request.session['member_id']
-    except KeyError:
-        pass
-    return HttpResponse("You're logged out.")
+def contributor_profile(request):
+    if not request.user.is_authenticated():
+        context = {'error_message': 'Please, sign in!'}
+        return render(request, 'public/signin.html', context)
+
+    contributor = get_object_or_404(Contributor, email=request.user.email)
+    context = {'contributor': contributor}
+    return render(request, 'contributor/profile.html', context)

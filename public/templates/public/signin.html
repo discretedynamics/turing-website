@@ -114,7 +114,11 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+                {% if error_message %}
+                    <div class="alert alert-danger" style="text-align: center">
+                        <strong>Oppss!</strong> {{ error_message }}
+                    </div>
+                {% endif %}
                 <form role="form" class="lead" action="{% url 'public:sign-in-submit' %}" method="post">
                     {% csrf_token %}
                     <div class="row">
@@ -122,8 +126,8 @@
                         <div class="col-lg-3">
                             <label>Email Address</label>
                         </div>
-                        <div class="col-lg-4 form-group {{ missing_email }}">
-                            <input type="text" class="form-control" placeholder="Enter email address" name="email" value="{{ email }}">
+                        <div class="col-lg-4 form-group {{ wrong_email }}">
+                            <input type="text" class="form-control" placeholder="Enter email address" name="email">
                         </div>
                     </div>
                     <div class="row">
@@ -131,7 +135,7 @@
                         <div class="col-lg-3">
                             <label>Password</label>
                         </div>
-                        <div class="col-lg-4 form-group {{ password_error }}">
+                        <div class="col-lg-4 form-group {{ wrong_password }}">
                             <input type="password" class="form-control" placeholder="Type in pasword" name="password">
                         </div>
                     </div>
