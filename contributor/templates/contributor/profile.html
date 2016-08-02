@@ -130,23 +130,103 @@
                 </div>
                 <!-- /.row -->
 
+                {% for message in messages %}
+                    <div class="alert alert-success" style="text-align: center">
+                        <strong>Yea!</strong> {{ message }}
+                    </div>
+                {% endfor %}
+
                 <div class="row">
-                    <div class="col-lg-12">
-                        <h2 class="page-header">Home to something new and cool!</h2>
-                        <p class="lead">
-                            Stay tuned! We are rolling out features gradually.
-                        </p>
+                    <div class="col-lg-12" style="text-align: center">
+                        <img id="profile-picture" style="width:150px; height:150px; border-radius: 75px;" src="">
+                        <div><a href="http://www.wikihow.com/Create-a-Gravatar" target="_blank">How to change my photo?</a></div>
                     </div>
                 </div>
+                <br><br>
+                <form role="form" class="lead" action="{% url 'contributor:update-profile' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-3">
+                            <label>Full Name</label>
+                        </div>
+                        <div class="col-lg-4 form-group">
+                            <input type="text" class="form-control" placeholder="Enter full name" name="name" value="{{ contributor.name }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-3">
+                            <label>Email Address</label>
+                        </div>
+                        <div class="col-lg-4 form-group">
+                            <input type="text" class="form-control" placeholder="Enter email address" name="email" value="{{ contributor.email }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-3">
+                            <label>Personal Website</label>
+                        </div>
+                        {% if contributor.personal_website %}
+                            <div class="col-lg-4 form-group">
+                                <input type="text" class="form-control" placeholder="Enter website URL" name="personal_website" value="{{ contributor.personal_website }}">
+                            </div>
+                        {% else %}
+                            <div class="col-lg-4 form-group">
+                                <input type="text" class="form-control" placeholder="Enter website URL" name="personal_website">
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-3">
+                            <label>Organization</label>
+                        </div>
+                        <div class="col-lg-4 form-group">
+                            <input type="text" class="form-control" placeholder="Enter affiliation" name="organization" value="{{ contributor.organization }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-3">
+                            <label>Organization Website</label>
+                        </div>
+                        {% if contributor.organization_website %}
+                            <div class="col-lg-4 form-group">
+                                <input type="text" class="form-control" placeholder="Enter organization website" name="organization_website" value="{{ contributor.organization_website }}">
+                            </div>
+                        {% else %}
+                            <div class="col-lg-4 form-group">
+                                <input type="text" class="form-control" placeholder="Enter organization website" name="organization_website">
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row" style="text-align:center">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-7 form-group">
+                            <button type="submit" class="btn btn-success" style="width: 80%">Update Profile</button>
+                        </div>
+                    </div>
+                    <br>
+                </form>
 
             </div>
             <!-- /.container-fluid -->
-
+            </div>
+    </div>
     <!-- /#wrapper -->
 
 
     <!-- jQuery -->
     <script src="{% static 'public/js/jquery.js' %}"></script>
+    <script src="{% static 'public/js/jquery.md5.js' %}"></script>
+    <script>
+        var email = "{{contributor.email}}"
+        email = email.trim().toLowerCase()
+        var src = "http://www.gravatar.com/avatar/" + $.md5(email) + "?s=150&d=mm";
+        $('#profile-picture').attr("src", src)
+    </script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'public/js/bootstrap.min.js' %}"></script>

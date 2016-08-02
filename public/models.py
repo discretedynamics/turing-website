@@ -45,11 +45,3 @@ class Algorithm(models.Model):
         return self.name
 
 
-class Paper(models.Model):
-    title = models.CharField('Paper Title', max_length=200)
-    url = models.URLField('Link')
-
-    def __str__(self):
-        return self.title
-
-
