@@ -51,7 +51,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{% url 'public:contributor_profile' %}">Hello {{ contributor.name }}!</a>
+                <a class="navbar-brand" href="{% url 'public:home' %}">TURING</a> |
+                <a class="navbar-brand" href="{% url 'contributor:profile' %}">My Profile</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -59,7 +60,14 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ contributor.name }} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="{% url 'public:sign-out' %}"><i class="fa fa-fw fa-sign-in"></i> Sign Out</a>
+                            <a href="{% url 'public:faq' %}"><i class="fa fa-fw fa-question-circle"></i> FAQs</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'public:contact' %}"><i class="fa fa-fw fa-info-circle"></i> Contact</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{% url 'public:sign-out' %}"><i class="fa fa-fw fa-sign-out"></i> Sign Out</a>
                         </li>
                     </ul>
                 </li>
@@ -68,7 +76,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="{% url 'public:contributor_profile' %}"><i class="fa fa-fw fa-home"></i> Profile</a>
+                        <a href="{% url 'contributor:profile' %}"><i class="fa fa-fw fa-user"></i> Profile</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-sort-numeric-asc"></i> Algorithms <i class="fa fa-fw fa-caret-down"></i></a>
@@ -85,7 +93,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-sort-numeric-asc"></i> Workflows <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-code-fork"></i> Workflows <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo2" class="collapse">
                             <li>
                                 <a href="#">My Workflows</a>
@@ -97,15 +105,6 @@
                                 <a href="#">How-to</a>
                             </li>
                         </ul>
-                    </li>
-                    <li>
-                        <a href="{% url 'public:faq' %}"><i class="fa fa-fw fa-question-circle"></i> FAQs</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'public:about' %}"><i class="fa fa-fw fa-info-circle"></i> About</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'public:contact' %}"><i class="fa fa-fw fa-envelope"></i> Contact Us</a>
                     </li>
                 </ul>
             </div>
@@ -143,11 +142,8 @@
             </div>
             <!-- /.container-fluid -->
 
-        </div>
-        <!-- /#page-wrapper -->
-
-    </div>
     <!-- /#wrapper -->
+
 
     <!-- jQuery -->
     <script src="{% static 'public/js/jquery.js' %}"></script>

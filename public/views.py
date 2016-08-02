@@ -1,4 +1,3 @@
-from django import forms
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -7,21 +6,31 @@ import ast
 from django.views.decorators.csrf import csrf_protect
 
 
-
 # Create your views here.
 def home(request):
     context = {'new_contributors': 1, \
                'new_algorithms': 2, \
                'new_workflows': 3, \
                }
+    if not request.user.is_authenticated():
+        return render(request, 'public/index.html', context)
+
+    contributor = get_object_or_404(Contributor, email=request.user.email)
+    context['contributor'] = contributor
     return render(request, 'public/index.html', context)
 
 
+
 def algorithms(request):
-    algorithms_list = Algorithm.objects.order_by('-pub_date')[:5]
+    algorithms_list = Algorithm.objects.order_by('-pub_date')[:]
     context = {
         'algorithms_list': algorithms_list
     }
+    if not request.user.is_authenticated():
+        return render(request, 'public/algorithms.html', context)
+
+    contributor = get_object_or_404(Contributor, email=request.user.email)
+    context['contributor'] = contributor
     return render(request, 'public/algorithms.html', context)
 
 
@@ -30,6 +39,12 @@ def useAlgorithm(request, algorithm_id):
     versions = ast.literal_eval(algorithm.versions)
     context = { 'algorithm': algorithm, \
                 'versions': versions}
+
+    if not request.user.is_authenticated():
+        return render(request, 'public/algorithm.html', context)
+
+    contributor = get_object_or_404(Contributor, email=request.user.email)
+    context['contributor'] = contributor
     return render(request, 'public/algorithm.html', context)
 
 
@@ -38,33 +53,61 @@ def workflows(request):
     context = {
         'workflows_list': workflows_list
     }
+
+    if not request.user.is_authenticated():
+        return render(request, 'public/workflows.html', context)
+
+    contributor = get_object_or_404(Contributor, email=request.user.email)
+    context['contributor'] = contributor
     return render(request, 'public/workflows.html', context)
 
 
 def runWorkflow(request, workflow_id):
     context = { 'workflow': {'id': workflow_id, \
                'name': 'ay 7aga delwa2t' + str(workflow_id)} }
+    if not request.user.is_authenticated():
+        return render(request, 'public/workflow.html', context)
+
+    contributor = get_object_or_404(Contributor, email=request.user.email)
+    context['contributor'] = contributor
     return render(request, 'public/workflow.html', context)
 
 
 def contribute(request):
-    return render(request, 'public/contribute.html')
+    if not request.user.is_authenticated():
+        return render(request, 'public/contribute.html')
+    contributor = get_object_or_404(Contributor, email=request.user.email)
+    context = {'contributor': contributor}
+    return render(request, 'public/contribute.html', context)
 
 
 def about(request):
-    return render(request, 'public/about.html')
+    if not request.user.is_authenticated():
+        return render(request, 'public/about.html')
+    contributor = get_object_or_404(Contributor, email=request.user.email)
+    context = {'contributor': contributor}
+    return render(request, 'public/about.html', context)
 
 
 def faq(request):
-    return render(request, 'public/faq.html')
-
+    if not request.user.is_authenticated():
+        return render(request, 'public/faq.html')
+    contributor = get_object_or_404(Contributor, email=request.user.email)
+    context = {'contributor': contributor}
+    return render(request, 'public/faq.html', context)
 
 def contact(request):
-    return render(request, 'public/contact.html')
+    if not request.user.is_authenticated():
+        return render(request, 'public/contact.html')
+    contributor = get_object_or_404(Contributor, email=request.user.email)
+    context = {'contributor': contributor}
+    return render(request, 'public/contact.html', context)
 
 
 def signup(request):
-    return render(request, 'public/signup.html')
+    if not request.user.is_authenticated():
+        return render(request, 'public/signup.html')
+    return redirect('public:home')
 
 
 def validate_signup_form(request):
@@ -136,11 +179,13 @@ def signup_submit(request):
             user = auth.authenticate(username=context['email'], password=context['password'])
             if user is not None and user.is_active:
                 auth.login(request, user)
-                return redirect('public:contributor_profile')
+                return redirect('contributor:profile')
 
 
 def signin(request):
-    return render(request, 'public/signin.html')
+    if not request.user.is_authenticated():
+        return render(request, 'public/signin.html')
+    return redirect('contributor:profile')
 
 
 def signin_submit(request):
@@ -149,7 +194,7 @@ def signin_submit(request):
     user = auth.authenticate(username=username, password=password)
     if user is not None:
         auth.login(request, user)
-        return redirect('public:contributor_profile')
+        return redirect('contributor:profile')
     else:
         context = {'error_message': 'Invalid credentials!', \
                    'wrong_email': 'has-error', \
@@ -160,13 +205,3 @@ def signin_submit(request):
 def sign_out(request):
     auth.logout(request)
     return redirect('public:home')
-
-
-def contributor_profile(request):
-    if not request.user.is_authenticated():
-        context = {'error_message': 'Please, sign in!'}
-        return render(request, 'public/signin.html', context)
-
-    contributor = get_object_or_404(Contributor, email=request.user.email)
-    context = {'contributor': contributor}
-    return render(request, 'contributor/profile.html', context)

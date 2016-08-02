@@ -18,6 +18,5 @@ urlpatterns = [
     url(r'^sign-up-submit/', views.signup_submit, name='sign-up-submit'),
     url(r'^sign-in/', views.signin, name='sign-in'),
     url(r'^sign-in-submit/', views.signin_submit, name='sign-in-submit'),
-    url(r'^sign-out/', views.sign_out, name='sign-out'),
-    url(r'^contributor/profile', views.contributor_profile, name='contributor_profile')
+    url(r'^sign-out/', views.sign_out, name='sign-out')
 ]

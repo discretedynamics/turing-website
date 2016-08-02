@@ -19,6 +19,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('public.urls')),
-    url(r'^algorun', include('algorun.urls')),
-    url(r'^algopiper', include('algopiper.urls'))
+    url(r'^contributor/', include('contributor.urls')),
+    url(r'^algorun/', include('algorun.urls')),
+    url(r'^algopiper/', include('algopiper.urls'))
 ]
