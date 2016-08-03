@@ -75,10 +75,10 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
+                    <li>
                         <a href="{% url 'contributor:profile' %}"><i class="fa fa-fw fa-user"></i> Profile</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-sort-numeric-asc"></i> Algorithms <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo1" class="collapse">
                             <li>
@@ -123,93 +123,48 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-user"></i> Profile
+                                <i class="fa fa-key"></i> How-to Guide
                             </li>
                         </ol>
                     </div>
                 </div>
                 <!-- /.row -->
 
-                {% for message in messages %}
-                    <div class="alert alert-success" style="text-align: center">
-                        <strong>Yea!</strong> {{ message }}
-                    </div>
-                {% endfor %}
-
                 <div class="row">
-                    <div class="col-lg-12" style="text-align: center">
-                        <img id="profile-picture" style="width:150px; height:150px; border-radius: 75px;" src="">
-                        <div><a href="http://www.wikihow.com/Create-a-Gravatar" target="_blank">How to change my photo?</a></div>
+                    <div class="col-lg-12">
+                        <p class="lead">
+                            TURING utilized AlgoRun packaging system to ensure reliable algorithm execution.
+                            AlgoRun offers you the following:
+                            <ul class="lead">
+                                <li>You are not going to change your code. Yay!</li>
+                                <li>You are not going to learn a new programming language.</li>
+                                <li>The underlying Docker technology is
+                                    going to ensure that your algorithm will always work the same way it works on
+                                    your machine. No broken libraries or missing dependencies.
+                                </li>
+                            </ul>
+                        </p>
+                        <p class="lead">
+                            To start-off, navigate to <a href="http://algorun.org/documentation" target="_blank">AlgoRun</a>
+                            and:
+                            <ol class="lead">
+                                <li>Read the How-to package your software section. Get inspired by reading the examples section.</li>
+                                <li>Package your algorithm</li>
+                                <li>Push your algorithm Docker image to <a href="https://hub.docker.com/" target="_blank">Docker Hub</a>.
+                                    (<a href="https://washraf.gitbooks.io/the-docker-ecosystem/content/Chapter%203/Section%205/push_image_to_docker_hub.html">see how?</a>)
+                                </li>
+                                <li> Publish your algorithm here!</li>
+                            </ol>
+                        </p>
+                        <p class="lead">
+                            Need help?
+                            <br>
+                            <a href="mailto:abdelrahman@engr.uconn.edu">Drop us an email</a>
+                            and we will get in touch in person. We can't wait to see your algorithm here <i class="fa fa-smile-o"></i>
+                        </p>
                     </div>
                 </div>
-                <br><br>
-                <form role="form" class="lead" action="{% url 'contributor:update-profile' %}" method="post">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-3">
-                            <label>Full Name</label>
-                        </div>
-                        <div class="col-lg-4 form-group">
-                            <input type="text" class="form-control" placeholder="Enter full name" name="name" value="{{ contributor.name }}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-3">
-                            <label>Email Address</label>
-                        </div>
-                        <div class="col-lg-4 form-group">
-                            <input type="text" class="form-control" placeholder="Enter email address" name="email" value="{{ contributor.email }}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-3">
-                            <label>Personal Website</label>
-                        </div>
-                        {% if contributor.personal_website %}
-                            <div class="col-lg-4 form-group">
-                                <input type="text" class="form-control" placeholder="Enter website URL" name="personal_website" value="{{ contributor.personal_website }}">
-                            </div>
-                        {% else %}
-                            <div class="col-lg-4 form-group">
-                                <input type="text" class="form-control" placeholder="Enter website URL" name="personal_website">
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-3">
-                            <label>Organization</label>
-                        </div>
-                        <div class="col-lg-4 form-group">
-                            <input type="text" class="form-control" placeholder="Enter affiliation" name="organization" value="{{ contributor.organization }}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-3">
-                            <label>Organization Website</label>
-                        </div>
-                        {% if contributor.organization_website %}
-                            <div class="col-lg-4 form-group">
-                                <input type="text" class="form-control" placeholder="Enter organization website" name="organization_website" value="{{ contributor.organization_website }}">
-                            </div>
-                        {% else %}
-                            <div class="col-lg-4 form-group">
-                                <input type="text" class="form-control" placeholder="Enter organization website" name="organization_website">
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="row" style="text-align:center">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-7 form-group">
-                            <button type="submit" class="btn btn-success" style="width: 80%">Update Profile</button>
-                        </div>
-                    </div>
-                    <br>
-                </form>
+
 
             </div>
             <!-- /.container-fluid -->

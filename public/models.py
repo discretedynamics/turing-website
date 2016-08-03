@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-import datetime
 from django.db import models
 from django.utils import timezone
 
@@ -22,24 +21,18 @@ class Contributor(models.Model):
 
 
 class Algorithm(models.Model):
-    name = models.CharField('Algorithm Name', max_length=200)
+    name = models.CharField('Algorithm Name', max_length=200, default='NEW_ALGORITHM')
     versions = models.CharField('Algorithm Versions', max_length=10, default="['latest']")
-    summary = models.CharField('Summary', max_length=200)
-    description = models.TextField('Description')
-    website = models.URLField('Website')
+    summary = models.CharField('Summary', max_length=200, null=True, blank=True)
+    description = models.TextField('Description', null=True, blank=True)
+    website = models.URLField('Website', null=True, blank=True)
     docker_image = models.CharField('Docker Image', max_length=50)
-    pub_date = models.DateTimeField('Date Published', auto_now_add=True, blank=True)
+    submit_date = models.DateTimeField('Date Submitted', default=timezone.now, blank=True)
+    status = models.CharField('Algorithm Availability', max_length=10, default='pending')
+    pub_date = models.DateTimeField('Date Published', blank=True, null=True)
 
-    admin_contributor = Contributor()
-    admin_contributor.name = "Abdelrahman Hosny"
-    admin_contributor.email = "aibrahim@uchc.edu"
-    admin_contributor.personal_website = "http://www.abdelrahmanhosny.me"
-    admin_contributor.organization = "Center for Quantitative Medicine, UConn Health"
-    admin_contributor.organization_website = "http://cqm.uchc.edu"
-    contributor = models.ForeignKey(Contributor, on_delete=models.CASCADE, default=DEFAULT_CONTRIBUTOR_ID)
+    contributor = models.ForeignKey(Contributor, on_delete=models.CASCADE, default=None, null=True)
 
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
     def __str__(self):
         return self.name
