@@ -5,8 +5,6 @@ from django.utils import timezone
 
 # Create your models here.
 
-DEFAULT_CONTRIBUTOR_ID=1
-
 
 class Contributor(models.Model):
     name = models.CharField('Contributor Name', max_length=50)

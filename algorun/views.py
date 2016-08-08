@@ -1,9 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
-from public.models import Algorithm
+from algorun import run_container, remove_container
 
-# Create your views here.
+
 def launch(request):
-    return HttpResponse('Helllloooo from algorun app')
-
-
+    docker_image = request.GET.get('docker_image', None)
+    result = run_container(docker_image, 'VISITOOOOR')
+    return HttpResponse(result['response'])

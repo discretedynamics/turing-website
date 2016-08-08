@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'public.apps.PublicConfig',
-    'contributor.apps.ContributorConfig'
+    'contributor.apps.ContributorConfig',
+    'algorun.apps.AlgorunConfig',
+    'algopiper.apps.AlgopiperConfig'
 ]
 
 MIDDLEWARE_CLASSES = [

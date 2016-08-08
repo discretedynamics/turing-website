@@ -20,9 +20,8 @@ def home(request):
     return render(request, 'public/index.html', context)
 
 
-
 def algorithms(request):
-    algorithms_list = Algorithm.objects.order_by('-pub_date')[:]
+    algorithms_list = Algorithm.objects.filter(status='published')
     context = {
         'algorithms_list': algorithms_list
     }
