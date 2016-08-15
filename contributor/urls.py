@@ -10,5 +10,8 @@ urlpatterns = [
     url(r'^algorithms/how-to/', views.algorithms_how_to, name='algorithms-how-to'),
     url(r'^algorithms/list/', views.my_algorithms, name='my-algorithms'),
     url(r'^algorithms/submit/', views.submit_algorithm, name='submit-algorithm'),
-    url(r'^algorithms/submit-info/', views.submit_algorithm_info, name='submit-algorithm-info')
+    url(r'^algorithms/submit-info/', views.submit_algorithm_info, name='submit-algorithm-info'),
+    url(r'^algorithms/delete-algorithm/(?P<algorithm_id>[0-9]+)', views.delete_algorithm, name='delete-algorithm'),
+    url(r'^algorithms/unpublish-algorithm/(?P<algorithm_id>[0-9]+)', views.unpublish_algorithm, name='unpublish-algorithm'),
+    url(r'^algorithms/submit-new-version/(?P<algorithm_id>[0-9]+)', views.submit_new_version, name='submit-new-version')
 ]

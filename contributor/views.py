@@ -56,7 +56,7 @@ def my_algorithms(request):
     submitted_algorithms = []
     published_algorithms = []
     for algorithm in algorithms:
-        if algorithm.status == 'pending':
+        if algorithm.status == 'pending' or algorithm.status == 'unpublished':
             submitted_algorithms.append(algorithm)
         else:
             published_algorithms.append(algorithm)
@@ -76,6 +76,7 @@ def submit_algorithm(request):
     context = {'contributor': contributor}
     return render(request, 'contributor/algorithms-submit-algorithm.html', context)
 
+
 @csrf_protect
 def submit_algorithm_info(request):
     contributor = get_object_or_404(Contributor, email=request.user.email)
@@ -90,3 +91,28 @@ def submit_algorithm_info(request):
                                                  You will receive an email once it is available on our server.")
     return redirect('contributor:submit-algorithm')
 
+
+@csrf_protect
+def delete_algorithm(request, algorithm_id):
+    algorithm = get_object_or_404(Algorithm, id=algorithm_id)
+    algorithm.delete()
+    return redirect('contributor:my-algorithms')
+
+
+@csrf_protect
+def unpublish_algorithm(request, algorithm_id):
+    algorithm = get_object_or_404(Algorithm, id=algorithm_id)
+    algorithm.status = 'unpublished'
+    algorithm.save()
+    return redirect('contributor:my-algorithms')
+
+
+@csrf_protect
+def submit_new_version(request, algorithm_id):
+    algorithm = get_object_or_404(Algorithm, id=algorithm_id)
+    version = request.GET.get('version', None)
+    algorithm.new_version = version
+    algorithm.save()
+
+    messages.add_message(request, messages.INFO, "Your algorithm new version will be available on our servers shortly.")
+    return redirect('contributor:my-algorithms')

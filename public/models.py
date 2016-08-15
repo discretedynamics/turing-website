@@ -21,12 +21,13 @@ class Contributor(models.Model):
 class Algorithm(models.Model):
     name = models.CharField('Algorithm Name', max_length=200, default='NEW_ALGORITHM')
     versions = models.CharField('Algorithm Versions', max_length=10, default="['latest']")
+    new_version = models.CharField('A new version', max_length=10, null=True, blank=True)
     summary = models.CharField('Summary', max_length=200, null=True, blank=True)
     description = models.TextField('Description', null=True, blank=True)
     website = models.URLField('Website', null=True, blank=True)
     docker_image = models.CharField('Docker Image', max_length=50)
     submit_date = models.DateTimeField('Date Submitted', default=timezone.now, blank=True)
-    status = models.CharField('Algorithm Availability', max_length=10, default='pending')
+    status = models.CharField('Algorithm Availability', max_length=20, default='pending')
     pub_date = models.DateTimeField('Date Published', blank=True, null=True)
 
     contributor = models.ForeignKey(Contributor, on_delete=models.CASCADE, default=None, null=True)

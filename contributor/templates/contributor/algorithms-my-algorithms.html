@@ -132,7 +132,7 @@
 
                 {% for message in messages %}
                     <div class="alert alert-success" style="text-align: center">
-                        <strong>Yea!</strong> {{ message }}
+                        <strong>Great!</strong> {{ message }}
                     </div>
                 {% endfor %}
 
@@ -146,10 +146,44 @@
                             </div>
                         </div>
                         {% if submitted_algorithms %}
+                            <ul class="list-group">
                             {% for algorithm in submitted_algorithms %}
-                                {{ algorithm.docker_image }}
+                                <ul class="list-group-item lead">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <h4>{{ algorithm.docker_image }}</h4>
+                                        </div>
+                                        <div class="col-lg-6"></div>
+                                        <div class="col-lg-2">
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{algorithm.id}}-delete" style="width: 100%">Delete</button>
+                                        </div>
+                                        <!-- Modal -->
+                                        <div id="{{algorithm.id}}-delete" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Delete algorithm!</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure you want to delete <b>{{algorithm.docker_image}}</b> ? </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form role="form" class="lead" action="{% url 'contributor:delete-algorithm' algorithm.id %}" method="get">
+                                                    {% csrf_token %}
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
                                 <br>
                             {% endfor %}
+                            </ul>
                         {% else %}
                             <div class="alert alert-warning" style="text-align: center">
                                 <strong>Oppss!</strong> No current pending algorithm submissions.
@@ -165,7 +199,65 @@
                         </div>
                         {% if published_algorithms %}
                             {% for algorithm in published_algorithms %}
-                                {{ algorithm.docker_image }}
+                                <ul class="list-group-item lead">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <h4>{{ algorithm.docker_image }}</h4>
+                                        </div>
+                                        <div class="col-lg-3"></div>
+                                        <div class="col-lg-3">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{algorithm.id}}-submit-new-version" style="width: 100%">Submit a new version</button>
+                                        </div>
+                                        <!-- Modal -->
+                                        <div id="{{algorithm.id}}-submit-new-version" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Submit a new version</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Make sure you have tagged your Docker image with the new version.</p>
+                                                    <form role="form" class="lead" action="{% url 'contributor:submit-new-version' algorithm.id %}" method="get">
+                                                    {% csrf_token %}
+                                                    <p>{{algorithm.docker_image}}: <span><input type="text" placeholder="e.g. 1.2.0" name="version"></span> </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Submit new version</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#{{algorithm.id}}-unpublish" style="width: 100%">Unpublish</button>
+                                        </div>
+                                        <!-- Modal -->
+                                        <div id="{{algorithm.id}}-unpublish" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Unpublish algorithm!</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure you want to unpublish <b>{{algorithm.docker_image}}</b> ? </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form role="form" class="lead" action="{% url 'contributor:unpublish-algorithm' algorithm.id %}" method="get">
+                                                    {% csrf_token %}
+                                                        <button type="submit" class="btn btn-warning">Unpublish</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
                                 <br>
                             {% endfor %}
                         {% else %}
@@ -196,11 +288,6 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'public/js/bootstrap.min.js' %}"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="{% static 'public/js/plugins/morris/raphael.min.js' %}"></script>
-    <script src="{% static 'public/js/plugins/morris/morris.min.js' %}"></script>
-    <script src="{% static 'public/js/plugins/morris/morris-data.js' %}"></script>
 
 </body>
 
