@@ -219,7 +219,7 @@
                                                     <h4 class="modal-title">Submit a new version</h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Make sure you have tagged your Docker image with the new version.</p>
+                                                    <p>Make sure you have tagged your Docker image with the new version and pushed it to Docker Hub.</p>
                                                     <form role="form" class="lead" action="{% url 'contributor:submit-new-version' algorithm.id %}" method="get">
                                                     {% csrf_token %}
                                                     <p>{{algorithm.docker_image}}: <span><input type="text" placeholder="e.g. 1.2.0" name="version"></span> </p>
