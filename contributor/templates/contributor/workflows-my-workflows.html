@@ -78,7 +78,7 @@
                     <li>
                         <a href="{% url 'contributor:profile' %}"><i class="fa fa-fw fa-user"></i> Profile</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-sort-numeric-asc"></i> Algorithms <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo1" class="collapse">
                             <li>
@@ -92,7 +92,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-code-fork"></i> Workflows <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo2" class="collapse">
                             <li>
@@ -123,7 +123,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-sort-numeric-asc"></i> My Algorithms
+                                <i class="fa fa-code-fork"></i> My Workflows
                             </li>
                         </ol>
                     </div>
@@ -139,39 +139,39 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="header">Submitted Algorithms</h1>
+                        <h1 class="header">Submitted Workflows</h1>
                         <div class="progress">
                             <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
                                 <span class="sr-only"> Pending</span>
                             </div>
                         </div>
-                        {% if submitted_algorithms %}
+                        {% if submitted_workflows %}
                             <ul class="list-group">
-                            {% for algorithm in submitted_algorithms %}
+                            {% for workflow in submitted_workflows %}
                                 <ul class="list-group-item lead">
                                     <div class="row">
                                         <div class="col-lg-4">
-                                            <h4>{{ algorithm.docker_image }}</h4>
+                                            <h4>{{ workflow.name }}</h4>
                                         </div>
                                         <div class="col-lg-6"></div>
                                         <div class="col-lg-2">
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{algorithm.id}}-delete" style="width: 100%">Delete</button>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{workflow.id}}-delete" style="width: 100%">Delete</button>
                                         </div>
                                         <!-- Modal -->
-                                        <div id="{{algorithm.id}}-delete" class="modal fade" role="dialog">
+                                        <div id="{{workflow.id}}-delete" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
 
                                             <!-- Modal content-->
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Delete algorithm!</h4>
+                                                    <h4 class="modal-title">Delete workflow!</h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Are you sure you want to delete <b>{{algorithm.docker_image}}</b> ? </p>
+                                                    <p>Are you sure you want to delete <b>{{workflow.name}}</b> ? </p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form role="form" class="lead" action="{% url 'contributor:delete-algorithm' algorithm.id %}" method="get">
+                                                    <form role="form" class="lead" action="{% url 'contributor:delete-workflow' workflow.id %}" method="get">
                                                     {% csrf_token %}
                                                         <button type="submit" class="btn btn-danger">Delete</button>
                                                     </form>
@@ -186,69 +186,43 @@
                             </ul>
                         {% else %}
                             <div class="alert alert-warning" style="text-align: center">
-                                <strong>Oppss!</strong> No current pending algorithm submissions.
-                                <a href="{% url 'contributor:algorithms-how-to' %}">Publish</a> an algorithm now!
+                                <strong>Oppss!</strong> No current pending workflow submissions.
+                                <a href="{% url 'contributor:workflows-how-to' %}">Publish</a> a workflow now!
                             </div>
                         {% endif %}
                         <br><br>
-                        <h1 class="header">Published Algorithms</h1>
+                        <h1 class="header">Published Workflows</h1>
                         <div class="progress">
                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
                                 <span class="sr-only"> Pending</span>
                             </div>
                         </div>
-                        {% if published_algorithms %}
-                            {% for algorithm in published_algorithms %}
+                        {% if published_workflows %}
+                            {% for workflow in published_workflows %}
                                 <ul class="list-group-item lead">
                                     <div class="row">
                                         <div class="col-lg-4">
-                                            <h4>{{ algorithm.docker_image }}</h4>
+                                            <h4>{{ workflow.name}}</h4>
                                         </div>
-                                        <div class="col-lg-3"></div>
-                                        <div class="col-lg-3">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{algorithm.id}}-submit-new-version" style="width: 100%">Submit a new version</button>
-                                        </div>
-                                        <!-- Modal -->
-                                        <div id="{{algorithm.id}}-submit-new-version" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
-
-                                            <!-- Modal content-->
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Submit a new version</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>Make sure you have tagged your Docker image with the new version and pushed it to Docker Hub.</p>
-                                                    <form role="form" class="lead" action="{% url 'contributor:submit-new-version' algorithm.id %}" method="get">
-                                                    {% csrf_token %}
-                                                    <p>{{algorithm.docker_image}}: <span><input type="text" placeholder="e.g. 1.2.0" name="version"></span> </p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Submit new version</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
+                                        <div class="col-lg-6"></div>
                                         <div class="col-lg-2">
-                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#{{algorithm.id}}-unpublish" style="width: 100%">Unpublish</button>
+                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#{{workflow.id}}-unpublish" style="width: 100%">Unpublish</button>
                                         </div>
                                         <!-- Modal -->
-                                        <div id="{{algorithm.id}}-unpublish" class="modal fade" role="dialog">
+                                        <div id="{{workflow.id}}-unpublish" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
 
                                             <!-- Modal content-->
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Unpublish algorithm!</h4>
+                                                    <h4 class="modal-title">Unpublish workflow!</h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Are you sure you want to unpublish <b>{{algorithm.docker_image}}</b> ? </p>
+                                                    <p>Are you sure you want to unpublish <b>{{workflow.name}}</b> ? </p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form role="form" class="lead" action="{% url 'contributor:unpublish-algorithm' algorithm.id %}" method="get">
+                                                    <form role="form" class="lead" action="{% url 'contributor:unpublish-workflow' workflow.id %}" method="get">
                                                     {% csrf_token %}
                                                         <button type="submit" class="btn btn-warning">Unpublish</button>
                                                     </form>
@@ -262,9 +236,9 @@
                             {% endfor %}
                         {% else %}
                             <div class="alert alert-warning" style="text-align: center">
-                                <strong>Oppss!</strong> You have no published algorithms.
-                                Either your algorithms are under review or you have not submitted yet.
-                                See our <a href="{% url 'contributor:algorithms-how-to' %}">how-to</a> guide.
+                                <strong>Oppss!</strong> You have no published workflows.
+                                Either your workflows are under review or you have not submitted yet.
+                                See our <a href="{% url 'contributor:workflows-how-to' %}">how-to</a> guide.
                             </div>
                         {% endif %}
                     </div>

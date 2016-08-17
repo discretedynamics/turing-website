@@ -78,7 +78,7 @@
                     <li>
                         <a href="{% url 'contributor:profile' %}"><i class="fa fa-fw fa-user"></i> Profile</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-sort-numeric-asc"></i> Algorithms <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo1" class="collapse">
                             <li>
@@ -92,7 +92,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-code-fork"></i> Workflows <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo2" class="collapse">
                             <li>
@@ -123,63 +123,43 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-pencil-square-o"></i> Submit Algorithm
+                                <i class="fa fa-key"></i> How-to Guide
                             </li>
                         </ol>
                     </div>
                 </div>
                 <!-- /.row -->
 
-                {% for message in messages %}
-                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                        <div class="alert alert-danger" style="text-align: center">
-                            <strong>Error!</strong> {{ message }}
-                        </div>
-                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
-                        <div class="alert alert-success" style="text-align: center">
-                            <strong>You are awesome!</strong> {{ message }}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-
-                <div class="row" style="text-align:center">
+                <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="header">
-                            It is that easy to submit your algorithm <i class="fa fa-hand-o-down"></i>
-                        </h1>
+                        <p class="lead">
+                            A workflow is a series of computations or data manipulation steps.<br>
+                            TURING allows you to create a workflow from the algorithms published here.
+                            TURING utilizes AlgoPiper, a web-based graphical tool to build and execute workflows.
+                        </p>
+                        <p class="lead">
+                            To start-off, navigate to <a href="http://algopiper.org/" target="_blank">AlgoPiper</a>
+                            and:
+                            <ol class="lead">
+                                <li>Click Launch and walk through the interactive tutorial from the Launch tab.</li>
+                                <li>Create your workflows.</li>
+                                <li>Export your workflows using the top-right menu.</li>
+                                <li>Publish your workflow here by submitting the exported JSON (copy and paste).</li>
+                            </ol>
+                        </p>
+                        <p class="lead">
+                            Need help?
+                            <br>
+                            <a href="mailto:abdelrahman@engr.uconn.edu">Drop us an email</a>
+                            and we will get in touch in person. We can't wait to see your workflow here <i class="fa fa-smile-o"></i>
+                        </p>
                     </div>
                 </div>
-                <br><br>
-                <form role="form" class="lead" action="{% url 'contributor:submit-algorithm-info' %}" method="post">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-4">
-                            <label>Docker Image on Docker Hub</label>
-                        </div>
-                        <div class="col-lg-4 form-group">
-                            <input type="text" class="form-control" placeholder="e.g. ahosny/bowtie" name="docker">
-                        </div>
-                    </div>
-                    <br>
 
-                    <div class="row" style="text-align:center">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-7 form-group">
-                            <button type="submit" class="btn btn-success" style="width: 80%">Submit Algorithm</button>
-                        </div>
-                    </div>
-                </form>
-                <div class="row" style="text-align: center">
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-7">
-                        <a href="https://docs.docker.com/docker-hub/" target="_blank">What is Docker Hub?</a>
-                    </div>
-                </div>
-                <br><br>
+
             </div>
             <!-- /.container-fluid -->
-        </div>
+            </div>
     </div>
     <!-- /#wrapper -->
 

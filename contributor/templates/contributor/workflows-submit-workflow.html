@@ -78,7 +78,7 @@
                     <li>
                         <a href="{% url 'contributor:profile' %}"><i class="fa fa-fw fa-user"></i> Profile</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-sort-numeric-asc"></i> Algorithms <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo1" class="collapse">
                             <li>
@@ -92,7 +92,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-code-fork"></i> Workflows <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo2" class="collapse">
                             <li>
@@ -123,7 +123,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-pencil-square-o"></i> Submit Algorithm
+                                <i class="fa fa-pencil-square-o"></i> Submit Workflow
                             </li>
                         </ol>
                     </div>
@@ -142,23 +142,34 @@
                     {% endif %}
                 {% endfor %}
 
-                <div class="row" style="text-align:center">
-                    <div class="col-lg-12">
-                        <h1 class="header">
-                            It is that easy to submit your algorithm <i class="fa fa-hand-o-down"></i>
-                        </h1>
-                    </div>
-                </div>
-                <br><br>
-                <form role="form" class="lead" action="{% url 'contributor:submit-algorithm-info' %}" method="post">
+                <form role="form" class="lead" action="{% url 'contributor:submit-workflow-json' %}" method="post">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-4">
-                            <label>Docker Image on Docker Hub</label>
+                        <div class="col-lg-3">
+                            <label>Workflow Name</label>
                         </div>
-                        <div class="col-lg-4 form-group">
-                            <input type="text" class="form-control" placeholder="e.g. ahosny/bowtie" name="docker">
+                        <div class="col-lg-9 form-group">
+                            <input type="text" class="form-control" placeholder="e.g. Two-step Reverse Engineering" name="workflow_name" value="{{name}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label>What is this workflow about?</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <textarea class="form-control" rows="5" placeholder="Write a brief desciption about the workflow" name="workflow_description">{{description}}</textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label>Workflow JSON definition</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <textarea class="form-control" rows="10" placeholder="Export the JSON description of the workflow and paste it here" name="workflow_json">{{json}}</textarea>
                         </div>
                     </div>
                     <br>
@@ -166,14 +177,14 @@
                     <div class="row" style="text-align:center">
                         <div class="col-lg-2"></div>
                         <div class="col-lg-7 form-group">
-                            <button type="submit" class="btn btn-success" style="width: 80%">Submit Algorithm</button>
+                            <button type="submit" class="btn btn-success" style="width: 80%">Submit Workflow</button>
                         </div>
                     </div>
                 </form>
                 <div class="row" style="text-align: center">
                     <div class="col-lg-2"></div>
                     <div class="col-lg-7">
-                        <a href="https://docs.docker.com/docker-hub/" target="_blank">What is Docker Hub?</a>
+                        <a href="http://algopiper.org/documentation" target="_blank">How to export workflow?</a>
                     </div>
                 </div>
                 <br><br>

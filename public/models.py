@@ -37,3 +37,18 @@ class Algorithm(models.Model):
         return self.name
 
 
+class Workflow(models.Model):
+    name = models.CharField('Workflow Name', max_length=200)
+    description = models.CharField('Description', max_length=10000)
+    workflow_json = models.TextField('Workflow JSON')
+    screenshot_path = models.CharField('Screenshot Path', max_length=200, blank=True, null=True)
+    file_path = models.CharField('File Path', max_length=200, blank=True, null=True)
+    submit_date = models.DateTimeField('Date Submitted', default=timezone.now, blank=True)
+    status = models.CharField('Workflow Availability', max_length=20, default='pending')
+    pub_date = models.DateTimeField('Date Published', blank=True, null=True)
+
+    contributor = models.ForeignKey(Contributor, on_delete=models.CASCADE, default=None, null=True)
+
+
+    def __str__(self):
+        return self.name

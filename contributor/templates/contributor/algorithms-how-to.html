@@ -96,13 +96,13 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-code-fork"></i> Workflows <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo2" class="collapse">
                             <li>
-                                <a href="#">How-to</a>
+                                <a href="{% url 'contributor:workflows-how-to' %}">How-to</a>
                             </li>
                             <li>
-                                <a href="#">My Workflows</a>
+                                <a href="{% url 'contributor:my-workflows' %}">My Workflows</a>
                             </li>
                             <li>
-                                <a href="#">Submit Workflow</a>
+                                <a href="{% url 'contributor:submit-workflow' %}">Submit Workflow</a>
                             </li>
                         </ul>
                     </li>
@@ -176,12 +176,6 @@
     <!-- jQuery -->
     <script src="{% static 'public/js/jquery.js' %}"></script>
     <script src="{% static 'public/js/jquery.md5.js' %}"></script>
-    <script>
-        var email = "{{contributor.email}}"
-        email = email.trim().toLowerCase()
-        var src = "http://www.gravatar.com/avatar/" + $.md5(email) + "?s=150&d=mm";
-        $('#profile-picture').attr("src", src)
-    </script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'public/js/bootstrap.min.js' %}"></script>
