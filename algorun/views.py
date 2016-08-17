@@ -10,10 +10,8 @@ def launch(request):
     docker_image = request.GET.get('docker_image', None)
     if 'visitor' in request.COOKIES:
         visitor = request.COOKIES['visitor']
-        print 'old visitor'
     else:
         visitor = uuid.uuid4()
-        print 'new visitor'
 
     # check to see if there is a running container for that user with the same docker image
     try:

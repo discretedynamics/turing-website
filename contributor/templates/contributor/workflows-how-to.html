@@ -138,15 +138,16 @@
                             TURING utilizes AlgoPiper, a web-based graphical tool to build and execute workflows.
                         </p>
                         <p class="lead">
-                            To start-off, navigate to <a href="http://algopiper.org/" target="_blank">AlgoPiper</a>
-                            and:
+                            To start-off,
                             <ol class="lead">
-                                <li>Click Launch and walk through the interactive tutorial from the Launch tab.</li>
+                                <li>Click the launch button below and walk through the interactive tutorial.</li>
                                 <li>Create your workflows.</li>
                                 <li>Export your workflows using the top-right menu.</li>
-                                <li>Publish your workflow here by submitting the exported JSON (copy and paste).</li>
+                                <li>Publish your workflow <a href="{% url 'contributor:workflows-how-to' %}">here</a> by submitting the exported JSON (copy and paste).</li>
                             </ol>
                         </p>
+                        <button class="btn btn-info" style="width: 100%" id="launch-algopiper">Launch AlgoPiper</button>
+                        <br><br>
                         <p class="lead">
                             Need help?
                             <br>
@@ -170,6 +171,30 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'public/js/bootstrap.min.js' %}"></script>
+
+    <script>
+        $('#launch-algopiper').click(function(){
+            $('#launch-algopiper').attr('disabled', true);
+            $('#launch-algopiper').html('please wait ..');
+
+            var jqxhr = $.get("/algopiper/")
+	            .done(function(data,textStatus,jqXHR) {
+                    data = JSON.parse(data);
+                    if(data['success'] == true){
+                        port_number = data['response'];
+                        function openTab(){
+                            window.open('/algopiper/' + data['response'], '_self');
+                            $('#launch-button').removeAttr('disabled');
+                            $('#launch-button').html('Launch');
+                        }
+                        setTimeout(openTab, 3000);
+                    }
+                })
+                .fail(function(data) {
+                    alert(JSON.stringify(data));
+                })
+        });
+    </script>
 
 </body>
 

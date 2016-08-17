@@ -20,7 +20,7 @@ class Contributor(models.Model):
 
 class Algorithm(models.Model):
     name = models.CharField('Algorithm Name', max_length=200, default='NEW_ALGORITHM')
-    versions = models.CharField('Algorithm Versions', max_length=10, default="['latest']")
+    versions = models.CharField('Algorithm Versions', max_length=200, default="['latest']")
     new_version = models.CharField('A new version', max_length=10, null=True, blank=True)
     summary = models.CharField('Summary', max_length=200, null=True, blank=True)
     description = models.TextField('Description', null=True, blank=True)
@@ -31,7 +31,6 @@ class Algorithm(models.Model):
     pub_date = models.DateTimeField('Date Published', blank=True, null=True)
 
     contributor = models.ForeignKey(Contributor, on_delete=models.CASCADE, default=None, null=True)
-
 
     def __str__(self):
         return self.name
@@ -48,7 +47,6 @@ class Workflow(models.Model):
     pub_date = models.DateTimeField('Date Published', blank=True, null=True)
 
     contributor = models.ForeignKey(Contributor, on_delete=models.CASCADE, default=None, null=True)
-
 
     def __str__(self):
         return self.name

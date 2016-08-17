@@ -40,12 +40,14 @@ INSTALLED_APPS = [
     'public.apps.PublicConfig',
     'contributor.apps.ContributorConfig',
     'algorun.apps.AlgorunConfig',
-    'algopiper.apps.AlgopiperConfig'
+    'algopiper.apps.AlgopiperConfig',
+    'corsheaders'
 ]
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -55,6 +57,9 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'turing.urls'
+
+CORS_ORIGIN_ALLOW_ALL = True
+
 
 TEMPLATES = [
     {
@@ -123,3 +128,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ALGOMANAGER = 'http://localhost:8000/algopiper'
+# ALGOMANAGER = 'http://www.discretedynamics.org/algopiper'
+
+SERVER_PATH = 'http://localhost'
+# SERVER_PATH = 'http://go.discretedynamics.org'
