@@ -19,8 +19,8 @@ def manager_list(request):
             image = {'name': algorithm.name, \
                      'docker': algorithm.docker_image + ':' + str(version)}
             available_images.append(image)
-    result = {'images': json.dumps(available_images)}
-    response = HttpResponse(json.dumps(result))
+    result = {'images': available_images}
+    response = HttpResponse(result)
 
     return response
 
