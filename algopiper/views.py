@@ -6,7 +6,6 @@ from algorun.models import RunningContainer
 from models import RunningAlgoPiper
 from django.conf import settings
 import ast, json, uuid
-from django.apps import apps
 
 
 # Create your views here.
@@ -20,7 +19,7 @@ def manager_list(request):
                      "docker": algorithm.docker_image + ':' + str(version)}
             available_images.append(image)
     result = {"images": available_images}
-    response = HttpResponse(json.dumps(result))
+    response = HttpResponse(json.dumps(result), content_type="application/json")
 
     return response
 
@@ -45,7 +44,7 @@ def manager_deploy(request):
     if running_container:
         response = {'status': 'success', \
                     'endpoint': server_path + ":" + str(running_container.port_number)}
-        return HttpResponse(json.dumps(response))
+        return HttpResponse(json.dumps(response), content_type="application/json")
 
     else:
         # check to see if the docker_image is available on the server
@@ -56,17 +55,17 @@ def manager_deploy(request):
                 response = {'status': 'success', \
                             'endpoint': server_path + ":" + str(result['response'])}
 
-                return HttpResponse(json.dumps(response))
+                return HttpResponse(json.dumps(response), content_type="application/json")
             else:
                 response = {'status': 'fail', \
                             'error_message': result['response']}
-                return HttpResponse(json.dumps(response))
+                return HttpResponse(json.dumps(response), content_type="application/json")
 
         except Algorithm.DoesNotExist:
             result = {'status': 'fail', \
                       'error_message': 'the requested docker image is not available on this server.\
                       use GET /api/v1/list to get all available images.'}
-            return HttpResponse(json.dumps(result))
+            return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 def launch(request):
