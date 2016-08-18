@@ -6,6 +6,7 @@ from algorun.models import RunningContainer
 from models import RunningAlgoPiper
 from django.conf import settings
 import ast, json, uuid
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
@@ -24,6 +25,7 @@ def manager_list(request):
     return response
 
 
+@csrf_exempt
 def manager_deploy(request):
     docker_image = request.POST.get('docker_image', None)
     node_id = request.POST.get('node_id', None)
