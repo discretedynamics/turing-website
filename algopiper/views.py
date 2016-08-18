@@ -16,11 +16,11 @@ def manager_list(request):
     for algorithm in available_algorithms:
         versions = ast.literal_eval(algorithm.versions)
         for version in versions:
-            image = {'name': algorithm.name, \
-                     'docker': algorithm.docker_image + ':' + str(version)}
+            image = {"name": algorithm.name, \
+                     "docker": algorithm.docker_image + ':' + str(version)}
             available_images.append(image)
-    result = {'images': available_images}
-    response = HttpResponse(result)
+    result = {"images": available_images}
+    response = HttpResponse(json.dumps(result))
 
     return response
 
