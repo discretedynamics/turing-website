@@ -38,7 +38,7 @@ class Algorithm(models.Model):
 
 class Workflow(models.Model):
     name = models.CharField('Workflow Name', max_length=200)
-    description = models.CharField('Description', max_length=10000)
+    description = models.TextField('Description')
     workflow_json = models.TextField('Workflow JSON')
     screenshot_path = models.CharField('Screenshot Path', max_length=200, blank=True, null=True)
     file_path = models.CharField('File Path', max_length=200, blank=True, null=True)

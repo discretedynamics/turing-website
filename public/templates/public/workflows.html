@@ -152,29 +152,33 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <div class="col-sm-12">
-                        {% if workflows_list %}
-                            {% for workflow in workflows_list %}
-                                <div class="col-sm-6" style="text-align: center">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">{{workflow.name}}</h3>
-                                        </div>
-                                        <div class="panel-body">
+                    {% if workflows_list %}
+                        {% for workflow in workflows_list %}
+                            <div class="col-sm-12">
+                                <div class="panel panel-info" style="text-align: center;">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">{{workflow.name}}</h3>
+                                    </div>
+                                    <div class="panel-body" style="text-align: center;align-items: center; display: flex">
+                                        <div class="col-sm-4">
                                             {{workflow.description}}
-                                            <br><br>
-                                            <a class="btn btn-default" href="{% url 'public:run_workflow' workflow.id %}">Use Now!</a>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <img src="{{workflow.screenshot_path}}" style="width:100%">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a class="btn btn-default" href="{% url 'algopiper:run-workflow' workflow.id %}" target="_blank">Use Now!</a>
                                         </div>
                                     </div>
                                 </div>
-                            {% endfor %}
-                        {% else %}
-                            <div class="alert alert-danger" style="text-align: center">
-                                <strong>Oppss!</strong> It looks like there is no workflows out there!
-                                What about creating and publishing your workflow here?<br> <a href="{% url 'public:contribute' %}">Contribute now!</a>
                             </div>
-                        {% endif %}
-                    </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-danger" style="text-align: center">
+                            <strong>Oppss!</strong> It looks like there is no workflows out there!
+                            What about creating and publishing your workflow here?<br> <a href="{% url 'public:contribute' %}">Contribute now!</a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             <!-- /.container-fluid -->

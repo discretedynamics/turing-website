@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
-from .models import Algorithm, Contributor
+from .models import Algorithm, Contributor, Workflow
 import ast
 from django.views.decorators.csrf import csrf_protect
 
@@ -48,7 +48,7 @@ def useAlgorithm(request, algorithm_id):
 
 
 def workflows(request):
-    workflows_list = []
+    workflows_list = Workflow.objects.filter(status='published')
     context = {
         'workflows_list': workflows_list
     }
@@ -59,17 +59,6 @@ def workflows(request):
     contributor = get_object_or_404(Contributor, email=request.user.email)
     context['contributor'] = contributor
     return render(request, 'public/workflows.html', context)
-
-
-def runWorkflow(request, workflow_id):
-    context = { 'workflow': {'id': workflow_id, \
-               'name': 'ay 7aga delwa2t' + str(workflow_id)} }
-    if not request.user.is_authenticated():
-        return render(request, 'public/workflow.html', context)
-
-    contributor = get_object_or_404(Contributor, email=request.user.email)
-    context['contributor'] = contributor
-    return render(request, 'public/workflow.html', context)
 
 
 def contribute(request):

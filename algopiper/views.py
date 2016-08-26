@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from public.models import Algorithm
+from public.models import Algorithm, Workflow
 from algopiper import run_container, run_algopiper
 from algorun.models import RunningContainer
 from models import RunningAlgoPiper
@@ -92,6 +92,19 @@ def launch(request):
     response.set_cookie('visitor', visitor)
 
     return response
+
+
+def run_workflow(request, workflow_id):
+    if 'visitor' in request.COOKIES:
+        visitor = request.COOKIES['visitor']
+    else:
+        visitor = uuid.uuid4()
+
+    workflow = get_object_or_404(Workflow, id=workflow_id)
+    result = run_algopiper(visitor, workflow_file=workflow.file_path, workflow_name=workflow.name)
+    context = {'port': result['response']}
+
+    return render(request, 'algopiper/view_algopiper.html', context)
 
 
 def view_algopiper_page(request, port_number):
