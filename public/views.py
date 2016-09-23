@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import Algorithm, Contributor, Workflow
 import ast
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
+import logging
 
 
 # Create your views here.
@@ -143,8 +144,6 @@ def validate_signup_form(request):
 
     return form_complete, context
 
-
-@csrf_protect
 def signup_submit(request):
 
     form_complete, context = validate_signup_form(request)
@@ -169,7 +168,6 @@ def signup_submit(request):
                 auth.login(request, user)
                 return redirect('contributor:profile')
 
-
 def signin(request):
     if not request.user.is_authenticated():
         return render(request, 'public/signin.html')
@@ -180,6 +178,7 @@ def signin_submit(request):
     username = request.POST['email']
     password = request.POST['password']
     user = auth.authenticate(username=username, password=password)
+
     if user is not None:
         auth.login(request, user)
         return redirect('contributor:profile')
