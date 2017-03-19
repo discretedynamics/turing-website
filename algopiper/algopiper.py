@@ -1,4 +1,4 @@
-from docker import Client
+import docker
 from .models import RunningAlgoPiper
 from algorun.models import RunningContainer
 from socket import *
@@ -37,12 +37,12 @@ def get_random_port():
 
 
 def remove_container(container_id):
-    docker_cli = Client(base_url='unix://var/run/docker.sock')
+    client = docker.from_env()
     try:
-        docker_cli.stop(container_id)
-        docker_cli.remove_container(container_id)
+        client.containers.get(container_id).stop()
+        client.containers.get(container_id).remove()
 
-        running_container = get_object_or_404(RunningAlgoPiper, container_id=container_id)
+        running_container = get_object_or_404(RunningContainer, container_id=container_id)
         running_container.delete()
 
         response = {'success': True, \
@@ -55,7 +55,7 @@ def remove_container(container_id):
 
 
 def run_algopiper(visitor_id, workflow_name=None, workflow_file=None):
-    docker_cli = Client(base_url='unix://var/run/docker.sock')
+    client = docker.from_env()
 
     # clean containers that have been running for more than 12 hours
     thr = threading.Thread(target=clean_algopiper_containers, args=(), kwargs={})
@@ -71,15 +71,11 @@ def run_algopiper(visitor_id, workflow_name=None, workflow_file=None):
 
     try:
         port = get_random_port()
-        container = docker_cli.create_container(docker_image, \
-                                            ports=[8765], \
-                                            host_config=docker_cli.create_host_config(
-                                                port_bindings={8765: port}
-                                                ),\
-                                                environment=env_variables)
-        _ = docker_cli.start(container=container.get('Id'))
+        container = client.containers.run(str(docker_image), detach=True,ports={8765: port}, \
+                                          environment=env_variables)
+
         new_container = RunningAlgoPiper(visitor_id=visitor_id, \
-                                         container_id=container.get('Id'), \
+                                         container_id=container.id, \
                                          port_number=port)
         new_container.save()
         response = {'success': True, \
@@ -92,7 +88,7 @@ def run_algopiper(visitor_id, workflow_name=None, workflow_file=None):
 
 
 def run_container(docker_image, visitor_id):
-    docker_cli = Client(base_url='unix://var/run/docker.sock')
+    client = docker.from_env()
 
     # clean containers that have been running for more than 12 hours
     thr = threading.Thread(target=clean_algorithm_containers, args=(), kwargs={})
@@ -100,15 +96,10 @@ def run_container(docker_image, visitor_id):
 
     try:
         port = get_random_port()
-        container = docker_cli.create_container(docker_image, \
-                                            ports=[8765], \
-                                            host_config=docker_cli.create_host_config(port_bindings={
-                                                8765: port
-                                            }))
-        _ = docker_cli.start(container=container.get('Id'))
+        container = client.containers.run(str(docker_image), detach=True,ports={8765: port})
         new_container = RunningContainer(visitor_id=visitor_id, \
                                          docker_image=docker_image, \
-                                         container_id=container.get('Id'), \
+                                         container_id=container.id, \
                                          port_number=port)
         new_container.save()
         response = {'success': True, \
