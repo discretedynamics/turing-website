@@ -88,7 +88,7 @@ def faq(request):
 
 def user_guide(request):
     if not request.user.is_authenticated():
-        return render(request, 'public/faq.html')
+        return render(request, 'public/user_guide.html')
     contributor = get_object_or_404(Contributor, email=request.user.email)
     context = {'contributor': contributor}
     return render(request, 'public/user_guide.html', context)
