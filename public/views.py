@@ -91,7 +91,7 @@ def user_guide(request):
         return render(request, 'public/faq.html')
     contributor = get_object_or_404(Contributor, email=request.user.email)
     context = {'contributor': contributor}
-    return render(request, 'public/faq.html', context)
+    return render(request, 'public/user_guide.html', context)
 
 
 def contact(request):
