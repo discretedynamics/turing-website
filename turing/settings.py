@@ -11,6 +11,16 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import environ
+
+# Conf
+ROOT_DIR = environ.Path(__file__) - 3
+APPS_DIR = ROOT_DIR.path('turing')
+ENV_PATH = str(APPS_DIR.path('.env'))
+
+env = environ.Env()
+if env.bool('READ_ENVFILE', default=True):
+    env.read_env(ENV_PATH)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +30,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')#7adoy(9@d67)5!9a#diqc3yj^0o)o$(&46n5(n5w2d1+sv7@'
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='r((ws^80$x*0sm6wdvqgi&l@eea^f@%!+9%ah35gcas6oukgj#')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', True)
 
 ALLOWED_HOSTS = []
 
@@ -83,12 +93,19 @@ WSGI_APPLICATION = 'turing.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+DATABASE_URL = 'sqlite:///db.sqlite3'
+POSTGRES_HOST = env('POSTGRES_HOST', default=None)
+POSTGRES_DB = env('POSTGRES_DB', default=None)
+POSTGRES_USER = env('POSTGRES_USER', default=None)
+POSTGRES_PASSWORD = env('POSTGRES_PASSWORD', default=None)
+if POSTGRES_DB and POSTGRES_USER and POSTGRES_PASSWORD and POSTGRES_HOST:
+    DATABASE_URL = 'postgres://' + POSTGRES_USER + ':' + POSTGRES_PASSWORD + '@' + POSTGRES_HOST + '/' + POSTGRES_DB
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': env.db('DATABASE_URL', default=DATABASE_URL),
 }
+DATABASES['default']['ATOMIC_REQUESTS'] = True
+DATABASES['default']['CONN_MAX_AGE'] = 600
 
 
 # Password validation
