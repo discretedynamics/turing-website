@@ -147,6 +147,7 @@ APPEND_SLASH=False
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = env.str("DJANGO_STATIC_ROOT", default=str(APPS_DIR.path('assets')))
 
 ALGOMANAGER = env('ALGOMANAGER', default='http://localhost:8000/algopiper') 
 
