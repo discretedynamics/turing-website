@@ -148,8 +148,6 @@ APPEND_SLASH=False
 
 STATIC_URL = '/static/'
 
-ALGOMANAGER = 'http://localhost:8000/algopiper'
-# ALGOMANAGER = 'http://www.discretedynamics.org/algopiper'
+ALGOMANAGER = env('ALGOMANAGER', default='http://localhost:8000/algopiper') 
 
-SERVER_PATH = 'http://localhost'
-# SERVER_PATH = 'http://go.discretedynamics.org'
+SERVER_PATH = env('ALGOMANAGER', default='http://localhost')
