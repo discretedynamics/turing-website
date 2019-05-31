@@ -228,7 +228,7 @@
                     if(data['success'] == true){
                         port_number = data['response'];
                         function openTab(){
-                            window.open('/algorun/view/' + data['response'], '_self');
+                            window.open('http://go.discretedynamics.org:' + port_number, '_blank');
                             $('#launch-button').removeAttr('disabled');
                             $('#launch-button').html('Launch');
                         }
