@@ -96,6 +96,7 @@ def run_container(docker_image, visitor_id):
 
     try:
         port = get_random_port()
+        client.images.pull(str(docker_image))
         container = client.containers.run(str(docker_image), detach=True,ports={8765: port})
         new_container = RunningContainer(visitor_id=visitor_id, \
                                          docker_image=docker_image, \
