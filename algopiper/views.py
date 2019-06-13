@@ -20,7 +20,7 @@ def manager_list(request):
                      "docker": algorithm.docker_image + ':' + str(version)}
             available_images.append(image)
     result = {"images": available_images}
-    response = HttpResponse(json.dumps(result), content_type="application/json")
+    response = HttpResponse(json.dumps(result))
 
     return response
 
